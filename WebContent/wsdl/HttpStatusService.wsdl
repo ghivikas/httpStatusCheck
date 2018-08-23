@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://status.http.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://status.http.com" xmlns:intf="http://status.http.com" xmlns:tns1="http://bean.http.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://status.http.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://bean.http.com"/>
+   <element name="httpstatus">
+    <complexType>
+     <sequence>
+      <element name="url" type="xsd:string"/>
+      <element name="UserName" type="xsd:string"/>
+      <element name="Password" type="xsd:string"/>
+      <element name="Domain" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="httpstatusResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="httpstatusReturn" type="tns1:StatusBean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://bean.http.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="StatusBean">
+    <sequence>
+     <element name="status" nillable="true" type="xsd:string"/>
+     <element name="url" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="httpstatusRequest">
+
+      <wsdl:part element="impl:httpstatus" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="httpstatusResponse">
+
+      <wsdl:part element="impl:httpstatusResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HttpStatusService">
+
+      <wsdl:operation name="httpstatus">
+
+         <wsdl:input message="impl:httpstatusRequest" name="httpstatusRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:httpstatusResponse" name="httpstatusResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="HttpStatusServiceSoapBinding" type="impl:HttpStatusService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="httpstatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="httpstatusRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="httpstatusResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HttpStatusServiceService">
+
+      <wsdl:port binding="impl:HttpStatusServiceSoapBinding" name="HttpStatusService">
+
+         <wsdlsoap:address location="http://localhost:8080/HttpResponseStatus/services/HttpStatusService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

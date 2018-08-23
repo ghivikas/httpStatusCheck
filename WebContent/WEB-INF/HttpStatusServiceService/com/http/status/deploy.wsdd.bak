@@ -1,0 +1,40 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from HttpStatusServiceService WSDL service -->
+
+  <service name="HttpStatusService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://status.http.com"/>
+      <parameter name="wsdlServiceElement" value="HttpStatusServiceService"/>
+      <parameter name="schemaQualified" value="http://bean.http.com,http://status.http.com"/>
+      <parameter name="wsdlServicePort" value="HttpStatusService"/>
+      <parameter name="className" value="com.http.status.HttpStatusServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="HttpStatusService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="httpstatus" qname="operNS:httpstatus" xmlns:operNS="http://status.http.com" returnQName="retNS:httpstatusReturn" xmlns:retNS="http://status.http.com" returnType="rtns:StatusBean" xmlns:rtns="http://bean.http.com" soapAction="" >
+        <parameter qname="pns:url" xmlns:pns="http://status.http.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:UserName" xmlns:pns="http://status.http.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:Password" xmlns:pns="http://status.http.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:Domain" xmlns:pns="http://status.http.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="httpstatus"/>
+
+      <typeMapping
+        xmlns:ns="http://bean.http.com"
+        qname="ns:StatusBean"
+        type="java:com.http.bean.StatusBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
